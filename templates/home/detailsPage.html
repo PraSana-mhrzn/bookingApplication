@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/details.css' %}">
+{% endblock css %}
+{% block content %}
+    <div id="carouselExample" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src={{ acc.image1.url }} class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src={{ acc.image2.url }} class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src={{ acc.image3.url }} class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExample"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <section id="info" class="d-flex justify-content-around align-items-center">
+        <div class="left-section">
+            <div class="top-section d-flex align-items-center justify-content-between">
+                <div class="top-left-section">
+                    <h3>{{ acc.hotel.name }}</h3>
+                    <h5>{{ acc.name }}</h5>
+                </div>
+                <div class="top-right-section">
+                    <h5>Rs. {{ acc.price }}</h5>
+                </div>
+            </div>
+            <div class="mid-section p-3 d-flex justify-content-between border border-2 border-dark">
+                {% if acc.hotel.wifi %}
+                    <div class="feature">
+                        <i class="fa-solid fa-wifi"></i>
+                        <h6>Free Wifi</h6>
+                    </div>
+                {% endif %}
+                {% if acc.hotel.water %}
+                    <div class="feature">
+                        <i class="fa-solid fa-shower"></i>
+                        <h6>Water Facilities</h6>
+                    </div>
+                {% endif %}
+                {% if acc.hotel.pickup %}
+                    <div class="feature">
+                        <i class="fa-solid fa-car"></i>
+                        <h6>Airport Pickup/ Drop</h6>
+                    </div>
+                {% endif %}
+                {% if acc.hotel.allService %}
+                    <div class="feature">
+                        <i class="fa-solid fa-phone"></i>
+                        <h6>24/7 Service</h6>
+                    </div>
+                {% endif %}
+                {% if acc.hotel.telephone %}
+                    <div class="feature">
+                        <i class="fa-solid fa-bell"></i>
+                        <h6>Consilerage</h6>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="bottom-section">
+                <p id="details-para">{{ acc.desc }}</p>
+            </div>
+        </div>
+        <div class="right-section border border-2 border-warning">
+            <img src={{ acc.hotel.logo.url }} class="img-fluid">
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-part">
+                    <label for="checkin">Check In</label>
+                    <input type="date" name="checkin" id="checkin" required>
+                </div>
+                <div class="input-part">
+                    <label for="checkout">Check Out</label>
+                    <input type="date" name="checkout" id="checkout" required>
+                </div>
+                {% if user.is_authenticated %}
+                    {% if valid %}
+                        <div class="text-center mb-2">
+                            <button class="btn btn-warning btn-md" type="submit">Book Now</button>
+                        </div>
+                    {% else %}
+                        <p>You have already booked</p>
+                    {% endif %}
+                {% else %}
+                    <p>Please Login To Book</p>
+                {% endif %}
+            </form>
+        </div>
+    </section>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+{% endblock css %}
+{% block content %}
+    <section id="hero" style="background-image:url({% static 'images/4.png' %})">
+        <div class="text-container">
+            <h2>Buy, Sell, Rent</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, molestiae.</p>
+        </div>
+    </section>
+    <section id="featured">
+        <div class="featured-container">
+            <h2 class="underlined-text">
+                <span >Featured</span> Accomodations
+            </h2>
+            <div class="accomodation-cards d-flex justify-content-around">
+                {% for i in featured %}
+                    <div class="ac-card">
+                        <div class="c-header">
+                            <img src={{ i.image1.url }} alt="Home One" class="img-fluid">
+                        </div>
+                        <div class="c-body">
+                            <h4>{{ i.hotel.city }}, {{ i.hotel.country }}</h4>
+                            <h6>Rs. {{ i.price }}</h6>
+                        </div>
+                        <div class="c-footer text-center">
+                            <a href="/details/{{ i.id }}">
+                                <div class="btn btn-warning text-ceter btn-md w-50">View Details</div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock content %}
